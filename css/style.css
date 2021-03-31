@@ -1,3 +1,7 @@
+body{
+    overflow-x: hidden;
+}
+
 .icon-logo{
     margin-right: 2rem;
 }
@@ -13,3 +17,21 @@
     margin: 2% 2%;
 }
 
+@media only screen and (max-width: 768px) {
+    .pokemons-section{
+        margin: 1rem;
+    }
+
+    .pagination__section:last-of-type{
+        padding-top: 1rem;
+    }
+
+    .column, .columns{
+        margin-bottom: 1rem;
+        margin-top: 0;
+    }
+
+    .header{
+        padding: 1rem;
+    }
+}

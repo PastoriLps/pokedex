@@ -62,7 +62,6 @@ function getFirstPage() {
 function searchBar() {
   const input = document.querySelector("#search-bar");
   if(input.value != ""){
-    disableAllPagination();
     const pokeSection = removeOldChildsAndReturnPokeSection();
     const row = createRow();
     const column = createColumn(
@@ -70,9 +69,11 @@ function searchBar() {
     );
     row.append(column);
     pokeSection.append(row);
+    disableAllPagination();
   }else{
     removeOldChildsAndReturnPokeSection();
     getFirstPage();
+    enableAllPagination();
   }
 }
 
@@ -88,6 +89,11 @@ function removeOldChildsAndReturnPokeSection() {
 function disableAllPagination() {
   disablePrevious();
   disableNext();
+}
+
+function enableAllPagination() {
+  enablePrevious();
+  enableNext();
 }
 
 function disableNext() {
@@ -143,7 +149,7 @@ function nextPage() {
       })
       .catch((error) => console.log("error", error));
   }
-}
+ }
 
 function prevPage() {
   console.log(pokemon);

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Pokedex</title>
   </head>
-  <body onload="getFirstPage()" class="container is-max-desktop">
+  <body onload="getFirstPage()" class="container">
     <header class="header mb-3">
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
@@ -21,12 +21,9 @@
               class="icon-logo"
               src="https://icon-icons.com/downloadimage.php?id=67529&root=851/SVG/&file=Pokedex_tool_icon-icons.com_67529.svg"
             />
-            <h1 class="title">Pokedex</h1>
+            <h1 class="title is-hidden-mobile">Pokedex</h1>
           </a>
-        </div>
-
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-end">
+          <div class="navbar-end is-hidden-desktop">
             <div class="navbar-item">
               <div class="field has-addons">
                 <div class="control">
@@ -44,21 +41,39 @@
             </div>
           </div>
         </div>
+
+        <div class="navbar-end is-hidden-mobile">
+          <div class="navbar-item">
+            <div class="field has-addons">
+              <div class="control">
+                <input
+                  class="input"
+                  id="search-bar"
+                  type="text"
+                  placeholder="Find a repository"
+                />
+              </div>
+              <div class="control">
+                <a class="button is-info" onclick="searchBar()"> Search </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
     </header>
 
     <section class="pagination__section">
       <div class="buttons is-justify-content-flex-end">
-        <a class="button is-light previous" onclick="prevPage()"> Previous </a>
-        <a class="button is-light next" onclick="nextPage()"> Next </a>
+        <button class="button is-light previous" onclick="prevPage()"> Previous </button>
+        <button class="button is-light next" onclick="nextPage()"> Next </button>
       </div>
     </section>
     <section class="pokemons-section mb-4"></section>
 
     <section class="pagination__section mb-4">
       <div class="buttons is-justify-content-flex-end">
-        <a class="button is-light previous" onclick="prevPage()"> Previous </a>
-        <a class="button is-light next" onclick="nextPage()"> Next </a>
+        <button class="button is-light previous" onclick="prevPage()"> Previous </button>
+        <button class="button is-light next" onclick="nextPage()"> Next </button>
       </div>
     </section>
     <script src="js/index.js"></script>
