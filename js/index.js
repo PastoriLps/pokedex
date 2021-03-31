@@ -1,16 +1,6 @@
 let pokemon = null;
 
-const modal = document.querySelector(".modal");
-function showModal(div) {
-  modal.classList.add("is-active");
-  console.log(div.id);
-}
-
-function hideModal() {
-  modal.classList.remove("is-active");
-}
-
-function createColumn(pokemonImage, index) {
+function createColumn(pokemonImage) {
     
   const column = document.createElement("div");
   const card = document.createElement("div");
@@ -25,9 +15,6 @@ function createColumn(pokemonImage, index) {
   figure.classList.add("is-4by3");
 
   image.src = pokemonImage;
-  card.id = index;
-
-  card.addEventListener("click", showModal.bind(card));
 
   figure.append(image);
   cardImage.append(figure);
@@ -53,19 +40,107 @@ function getFirstPage() {
     .then((response) => response.json())
     .then((result) => {
       pokemon = result;
+      if (result.previous == null) {
+        disablePrevious();
+      }
       let columns = createRow();
-      const body = document.querySelector("body");
+      const pokeSection = document.querySelector(".pokemons-section");
       pokemon.results.forEach((pokemonItem, index) => {
         const column = createColumn(
-          `https://projectpokemon.org/images/normal-sprite/${pokemonItem.name}.gif`,
-          index
+          `https://projectpokemon.org/images/normal-sprite/${pokemonItem.name}.gif`
         );
         columns.append(column);
         if ((index + 1) % 4 == 0) {
-          body.append(columns);
+          pokeSection.append(columns);
           columns = createRow();
         }
       });
     })
     .catch((error) => console.log("error", error));
+}
+
+function searchBar() {
+  const input = document.querySelector("#search-bar");
+  if(input.value != ""){
+    const pokeSection = removeOldChildsAndReturnPokeSection();
+    const row = createRow();
+    const column = createColumn(
+      `https://projectpokemon.org/images/normal-sprite/${input.value.toLowerCase()}.gif`
+    );
+    row.append(column);
+    pokeSection.append(row);
+    disableAllPagination();
+  }else{
+    removeOldChildsAndReturnPokeSection();
+    getFirstPage();
+  }
+}
+
+function removeOldChildsAndReturnPokeSection() {
+  const pokeSection = document.querySelector(".pokemons-section");
+  const childrens = [...pokeSection.children];
+  childrens.forEach(function (item) {
+    pokeSection.removeChild(item);
+  });
+  return pokeSection;
+}
+
+function disableAllPagination() {
+  disablePrevious();
+  disableNext();
+}
+
+function disableNext() {
+  const nextList = document.querySelectorAll(".next");
+  nextList.forEach(function (link) { link.setAttribute('disabled', 'disabled'); });
+}
+
+function disablePrevious() {
+  const previousList = document.querySelectorAll(".previous");
+  previousList.forEach(function (link) { link.setAttribute('disabled', 'disabled'); });
+}
+
+function enablePrevious() {
+  const previousList = document.querySelectorAll(".previous");
+  previousList.forEach(function (link) { link.removeAttribute('disabled'); });
+}
+
+function enableNext() {
+  const nextList = document.querySelectorAll(".next");
+  nextList.forEach(function (link) { link.removeAttribute('disabled'); });
+}
+
+function nextPage() {
+  console.log(pokemon);
+  if (pokemon.next != null) {
+    removeOldChildsAndReturnPokeSection();
+    var requestOptions = {
+      method: "GET",
+      //   redirect: "follow",
+    };
+
+    fetch(pokemon.next, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        pokemon = result;
+        if (result.previous == null) {
+          disablePrevious();
+        }else{
+          enablePrevious();
+        }
+        let columns = createRow();
+        const pokeSection = document.querySelector(".pokemons-section");
+        pokemon.results.forEach((pokemonItem, index) => {
+          const column = createColumn(
+            `https://projectpokemon.org/images/normal-sprite/${pokemonItem.name}.gif`
+          );
+          columns.append(column);
+          if ((index + 1) % 4 == 0) {
+            pokeSection.append(columns);
+            columns = createRow();
+          }
+        });
+      })
+      .catch((error) => console.log("error", error));
+  }
 }

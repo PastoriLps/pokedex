@@ -4,32 +4,42 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/x-icon" href="/img/snorlax.ico" />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" 
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
     />
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
     <title>Pokedex</title>
   </head>
   <body onload="getFirstPage()" class="container is-max-desktop">
-    <header class="header">
+    <header class="header mb-3">
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-          <a class="navbar-item">
-            <img src="https://camo.githubusercontent.com/7f1f1e69bef239378a28e8aca7d1d7bd0890d37a7871d01135e2d044da6e2157/68747470733a2f2f692e696d6775722e636f6d2f415975745a4f462e706e67" width="224" height="34">
+          <a class="navbar-item is-flex is-align-items-center">
+            <img
+              class="icon-logo"
+              src="https://icon-icons.com/downloadimage.php?id=67529&root=851/SVG/&file=Pokedex_tool_icon-icons.com_67529.svg"
+            />
+            <h1 class="title">Pokedex</h1>
           </a>
         </div>
-      
-       <div id="navbarBasicExample" class="navbar-menu">    
+
+        <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-end">
             <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-light">
-                  Previous
-                </a>
-                <a class="button is-light">
-                  Next
-                </a>
+              <div class="field has-addons">
+                <div class="control">
+                  <input
+                    class="input"
+                    id="search-bar"
+                    type="text"
+                    placeholder="Find a repository"
+                  />
+                </div>
+                <div class="control">
+                  <a class="button is-info" onclick="searchBar()"> Search </a>
+                </div>
               </div>
             </div>
           </div>
@@ -37,22 +47,20 @@
       </nav>
     </header>
 
-    <div class="columns">
-    </div>
-    
-
-    <div class="modal">
-      <div class="modal-background"></div>
-      <div class="modal-content">
-
+    <section class="pagination__section">
+      <div class="buttons is-justify-content-flex-end">
+        <a class="button is-light previous"> Previous </a>
+        <a class="button is-light next" onclick="nextPage()"> Next </a>
       </div>
-      <button
-        class="modal-close is-large"
-        aria-label="close"
-        onclick="hideModal()"
-      ></button>
-    </div>
+    </section>
+    <section class="pokemons-section mb-4"></section>
+
+    <section class="pagination__section mb-4">
+      <div class="buttons is-justify-content-flex-end">
+        <a class="button is-light previous"> Previous </a>
+        <a class="button is-light next" onclick="nextPage()"> Next </a>
+      </div>
+    </section>
     <script src="js/index.js"></script>
   </body>
-
 </html>
