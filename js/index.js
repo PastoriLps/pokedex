@@ -62,6 +62,7 @@ function getFirstPage() {
 function searchBar() {
   const input = document.querySelector("#search-bar");
   if(input.value != ""){
+    disableAllPagination();
     const pokeSection = removeOldChildsAndReturnPokeSection();
     const row = createRow();
     const column = createColumn(
@@ -69,7 +70,6 @@ function searchBar() {
     );
     row.append(column);
     pokeSection.append(row);
-    disableAllPagination();
   }else{
     removeOldChildsAndReturnPokeSection();
     getFirstPage();
@@ -120,6 +120,41 @@ function nextPage() {
     };
 
     fetch(pokemon.next, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        pokemon = result;
+        if (result.previous == null) {
+          disablePrevious();
+        }else{
+          enablePrevious();
+        }
+        let columns = createRow();
+        const pokeSection = document.querySelector(".pokemons-section");
+        pokemon.results.forEach((pokemonItem, index) => {
+          const column = createColumn(
+            `https://projectpokemon.org/images/normal-sprite/${pokemonItem.name}.gif`
+          );
+          columns.append(column);
+          if ((index + 1) % 4 == 0) {
+            pokeSection.append(columns);
+            columns = createRow();
+          }
+        });
+      })
+      .catch((error) => console.log("error", error));
+  }
+}
+
+function prevPage() {
+  console.log(pokemon);
+  if (pokemon.previous != null) {
+    removeOldChildsAndReturnPokeSection();
+    var requestOptions = {
+      method: "GET",
+      //   redirect: "follow",
+    };
+
+    fetch(pokemon.previous, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         pokemon = result;
